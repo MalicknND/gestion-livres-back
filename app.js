@@ -1,5 +1,13 @@
 const express = require("express");
 const sequelize = require("./models/sequelize");
+const Livre = require("./models/Livre");
+const {
+  getBooks,
+  getBook,
+  deleteBook,
+  addBook,
+  updateBook,
+} = require("./controllers/livre.controller");
 
 const app = express();
 const port = 5000;
@@ -20,6 +28,21 @@ app.get("/", (req, res) => {
     message: "Hello World!",
   });
 });
+
+// récupération des livres
+app.get("/livres", getBooks);
+
+// récupération d'un livre
+app.get("/livres/:id", getBook);
+
+// suppression d'un livre
+app.delete("/livres/:id", deleteBook);
+
+// ajout d'un livre
+app.post("/livres", addBook);
+
+// modification d'un livre
+app.put("/livres/:id", updateBook);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
